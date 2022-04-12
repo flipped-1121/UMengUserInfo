@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>show</title>
+
+    {% load static %}
+    <link href="{% static '/css/layui.css' %}" rel="stylesheet">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-LY6QZQpYtqgQLJeUeh2disXkUUa+fRYfq/3dxdpkU5PQZUCqg/BK4wrhQ9idOojx" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-3JyvMmfSMpWbSPyCjNwU5lHJFeswLerSwlOGCGjyuhQ+HKQNQKCbIzEgGTP1MfyY"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div>
+    <form class="layui-form" action="../show/" method="post">
+        {% csrf_token %}
+        <div class="layui-form-item">
+            <label class="layui-form-label">院系</label>
+            <div class="layui-input-block">
+                <select name="faculty" lay-verify="required">
+                    <option value=""></option>
+                    <option value="计算机科学与工程学院">计算机科学与工程学院</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">年级</label>
+            <div class="layui-input-block">
+                <select name="gradeNumber" lay-verify="required">
+                    <option value=""></option>
+                    <option value="2018">2018</option>
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">班级</label>
+            <div class="layui-input-block">
+                <select name="classNumber" lay-verify="required">
+                    <option value=""></option>
+                    <option value="物联网19-2">物联网19-2</option>
+                    <option value="物联网19-1">物联网19-1</option>
+                    <option value="计算机科学与技术19-7">计算机科学与技术19-7</option>
+                    <option value="计算机科学与技术19-6">计算机科学与技术19-6</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">运动类型</label>
+            <div class="layui-input-block">
+                <select name="typeValue" lay-verify="required">
+                    <option value=""></option>
+                    <option value="长跑">长跑</option>
+                    <option value="晨跑">晨跑</option>
+                    <option value="2">2020</option>
+                    <option value="3">2021</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-block">
+                <input type="radio" name="sex" value="All" title="所有" checked>
+                <input type="radio" name="sex" value="男" title="男" >
+                <input type="radio" name="sex" value="女" title="女">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" type="submit">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<table class="layui-table" lay-size="lg">
+    <thead>
+    <tr>
+        {#            <th>ID</th>#}
+        <th>姓名</th>
+        <th>性别</th>
+        <th>运动时间/秒</th>
+        <th>本周运动次数</th>
+        <th>本周达标公里数</th>
+        <th>本周运动配速</th>
+        <th>本学期目标公里数</th>
+        <th>本学期达标次数</th>
+        <th>本学期达标公里数</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in userList %}
+        <div class="if/else">
+            {% if typeValue == 5 %}
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.gender }}</td>
+                    <td>{{ user.weekLdrunTime }}</td>
+                    <td>{{ user.weekLdrunNum }}</td>
+                    <td>{{ user.weekLdrunDistance }}</td>
+                    <td>{{ user.weekLdrunPace }}</td>
+                    <td>{{ user.termLdrunDistance }}</td>
+                    <td>{{ user.reachLdrunTargetNum }}</td>
+                    <td>{{ user.reachLdrunScore }}</td>
+                </tr>
+            {% elif typeValue == 4 %}
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.gender }}</td>
+                    <td>{{ user.weekMrunTime }}</td>
+                    <td>{{ user.weekMrunNum }}</td>
+                    <td>{{ user.weekMrunDistance }}</td>
+                    <td>{{ user.weekMrunPace }}</td>
+                    <td>{{ user.termMrunDistance }}</td>
+                    <td>{{ user.reachMrunTargetNum }}</td>
+                    <td>{{ user.reachMrunScore }}</td>
+                </tr>
+            {% endif %}
+        </div>
+
+    {% endfor %}
+    </tbody>
+</table>
+
+<script type="text/javascript" src="{% static '/js/layui.js' %}"></script>
+</body>
+</html>
